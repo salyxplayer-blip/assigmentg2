@@ -1,1779 +1,1161 @@
 <!DOCTYPE html>
 <html lang="km">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>FoodStore - Food & Drinks</title>
-
-    <!-- ភ្ជាប់ Google Font ខ្មែរ សម្រាប់អក្សរស្អាត -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Kantumruy Pro', Arial, sans-serif;
-            background: #f4f6f8;
-            color: #2d3748;
-            line-height: 1.6;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        button {
-            font-family: inherit;
-            cursor: pointer;
-        }
-
-        /* ================= NAVBAR ================= */
-        .navbar {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 7%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 24px;
-            font-weight: 700;
-            color: #ff4757;
-        }
-
-        .logo-icon {
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #ff6b81, #ff4757);
-            color: #fff;
-            border-radius: 14px;
-            font-size: 22px;
-            box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
-        }
-
-        .logo-text small {
-            display: block;
-            font-size: 11px;
-            color: #718096;
-            font-weight: 500;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 32px;
-        }
-
-        .nav-links a {
-            color: #4a5568;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #ff4757;
-        }
-
-        .cart-btn {
-            border: none;
-            background: linear-gradient(135deg, #ff6b81, #ff4757);
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .cart-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
-        }
-
-        #cartCount {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 22px;
-            height: 22px;
-            margin-left: 4px;
-            background: #fff;
-            color: #ff4757;
-            border-radius: 50%;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        /* ================= HERO SLIDER ================= */
-        .hero {
-            position: relative;
-            height: 520px;
-            overflow: hidden;
-        }
-
-        .slide {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            padding: 0 8%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 0.8s ease, transform 1.2s ease;
-            transform: scale(1.03);
-        }
-
-        .slide.active {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .slide::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to right, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.2));
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            color: #fff;
-            max-width: 600px;
-        }
-
-        .hero-content h1 {
-            font-size: 56px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            line-height: 1.2;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-
-        .hero-content p {
-            font-size: 20px;
-            margin-bottom: 28px;
-            opacity: 0.9;
-        }
-
-        .hero-btn {
-            display: inline-block;
-            padding: 14px 32px;
-            background: linear-gradient(135deg, #ff6b81, #ff4757);
-            color: #fff;
-            border-radius: 30px;
-            font-weight: 600;
-            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .hero-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 71, 87, 0.5);
-        }
-
-        .slider-dots {
-            position: absolute;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 5;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border: none;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .dot.active {
-            width: 30px;
-            background: #ff4757;
-        }
-
-        /* ================= SECTIONS ================= */
-        .section {
-            padding: 80px 7%;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 45px;
-        }
-
-        .section-title h2 {
-            font-size: 36px;
-            color: #1a202c;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .section-title p {
-            color: #718096;
-            font-size: 16px;
-        }
-
-        /* Categories */
-        .categories {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 20px;
-        }
-
-        .category-card {
-            background: #fff;
-            padding: 28px 15px;
-            text-align: center;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(0, 0, 0, 0.03);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .category-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(255, 71, 87, 0.12);
-            border-color: rgba(255, 71, 87, 0.2);
-        }
-
-        .category-icon {
-            font-size: 44px;
-            margin-bottom: 12px;
-            transition: transform 0.3s ease;
-        }
-
-        .category-card:hover .category-icon {
-            transform: scale(1.15);
-        }
-
-        .category-card h3 {
-            font-size: 16px;
-            color: #2d3748;
-            font-weight: 600;
-        }
-
-        /* Search Box */
-        .search-box {
-            max-width: 550px;
-            margin: 0 auto 45px;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 16px 24px;
-            border: 2px solid #edf2f7;
-            border-radius: 30px;
-            outline: none;
-            font-size: 16px;
-            background: #fff;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-            transition: all 0.3s ease;
-        }
-
-        .search-box input:focus {
-            border-color: #ff4757;
-            box-shadow: 0 4px 20px rgba(255, 71, 87, 0.15);
-        }
-
-        /* ================= PRODUCT CARDS ================= */
-        .products {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 28px;
-        }
-
-        .product-card {
-            background: #fff;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(0, 0, 0, 0.04);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-        }
-
-        /* កុងតឺន័ររូបភាពដើម្បីរក្សាទំហំឱ្យស្មើគ្នា និងមាន Zoom Animation */
-        .product-card-img-wrapper {
-            width: 100%;
-            height: 220px;
-            overflow: hidden;
-            position: relative;
-            background: #edf2f7;
-        }
-
-        .product-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-        }
-
-        .product-card:hover .product-image {
-            transform: scale(1.08);
-        }
-
-        .product-info {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-
-        .product-info h3 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #1a202c;
-            margin-bottom: 6px;
-        }
-
-        .product-description {
-            color: #718096;
-            font-size: 14px;
-            margin-bottom: 18px;
-            flex: 1;
-        }
-
-        .product-bottom {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-top: 12px;
-            border-top: 1px solid #f7fafc;
-        }
-
-        /* តម្លៃលេចធ្លោទាក់ទាញ */
-        .price {
-            color: #ff4757;
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        /* ប៊ូតុងបន្ថែម */
-        .add-cart {
-            border: none;
-            padding: 10px 18px;
-            background: #fff0f2;
-            color: #ff4757;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 700;
-            transition: all 0.3s ease;
-        }
-
-        .add-cart:hover {
-            background: #ff4757;
-            color: #fff;
-            box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
-        }
-
-        /* ================= COMING SOON & BENEFITS ================= */
-        .coming-soon {
-            background: #fff5f5;
-            border-radius: 30px;
-        }
-
-        .coming-grid, .benefits {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 25px;
-        }
-
-        .coming-card, .benefit-card {
-            background: #fff;
-            padding: 30px 20px;
-            text-align: center;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(0,0,0,0.02);
-            transition: transform 0.3s ease;
-        }
-
-        .coming-card:hover, .benefit-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .coming-card .icon, .benefit-icon {
-            font-size: 48px;
-            margin-bottom: 12px;
-        }
-
-        .coming-card h3, .benefit-card h3 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .coming-card p, .benefit-card p {
-            color: #718096;
-            font-size: 14px;
-        }
-
-        /* ================= FOOTER ================= */
-        footer {
-            background: #1a202c;
-            color: #fff;
-            padding: 60px 7% 25px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-logo {
-            font-size: 26px;
-            color: #ff4757;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        footer p {
-            color: #a0aec0;
-        }
-
-        .footer-links h3 {
-            font-size: 18px;
-            margin-bottom: 18px;
-        }
-
-        .footer-links a {
-            display: block;
-            color: #a0aec0;
-            margin-bottom: 10px;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: #ff4757;
-        }
-
-        .copyright {
-            padding-top: 25px;
-            border-top: 1px solid #2d3748;
-            text-align: center;
-            color: #718096;
-            font-size: 14px;
-        }
-
-        /* ================= CART & PAYMENT OVERLAY ================= */
-        .cart-overlay, .payment-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .payment-overlay {
-            z-index: 3000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .cart-overlay.active, .payment-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .cart-panel {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 420px;
-            max-width: 100%;
-            height: 100%;
-            background: #fff;
-            display: flex;
-            flex-direction: column;
-            transform: translateX(100%);
-            transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-            box-shadow: -10px 0 30px rgba(0,0,0,0.15);
-        }
-
-        .cart-overlay.active .cart-panel {
-            transform: translateX(0);
-        }
-
-        .cart-header, .payment-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 22px;
-            border-bottom: 1px solid #edf2f7;
-        }
-
-        .cart-header h2, .payment-header h2 {
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .close-cart, .close-payment {
-            border: none;
-            background: #f7fafc;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            font-size: 20px;
-            color: #4a5568;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .close-cart:hover, .close-payment:hover {
-            background: #edf2f7;
-        }
-
-        .cart-items {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-        }
-
-        .empty-cart {
-            text-align: center;
-            color: #a0aec0;
-            padding: 60px 20px;
-            font-size: 16px;
-        }
-
-        .cart-item {
-            display: flex;
-            gap: 14px;
-            padding: 14px 0;
-            border-bottom: 1px solid #edf2f7;
-        }
-
-        .cart-item img {
-            width: 75px;
-            height: 75px;
-            object-fit: cover;
-            border-radius: 12px;
-        }
-
-        .cart-item-info {
-            flex: 1;
-        }
-
-        .cart-item-info h4 {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .cart-item-price {
-            color: #ff4757;
-            font-weight: 700;
-            margin-top: 4px;
-        }
-
-        .remove-item {
-            border: none;
-            background: none;
-            color: #e53e3e;
-            font-size: 13px;
-            margin-top: 4px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .cart-footer {
-            padding: 22px;
-            border-top: 1px solid #edf2f7;
-            background: #f7fafc;
-        }
-
-        .cart-total {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 18px;
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .checkout-btn, .confirm-payment {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #ff6b81, #ff4757);
-            color: #fff;
-            font-size: 16px;
-            font-weight: 700;
-            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .checkout-btn:hover, .confirm-payment:hover {
-            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
-        }
-
-        /* Payment Modal */
-        .payment-modal {
-            width: 450px;
-            max-width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            background: #fff;
-            border-radius: 24px;
-            padding: 30px;
-            text-align: center;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-        }
-
-        .payment-overlay.active .payment-modal {
-            transform: scale(1);
-        }
-
-        .payment-subtitle {
-            color: #718096;
-            margin-bottom: 18px;
-        }
-
-        .payment-total {
-            background: #fff0f2;
-            padding: 16px;
-            border-radius: 16px;
-            margin-bottom: 20px;
-        }
-
-        .payment-total span {
-            display: block;
-            color: #718096;
-            font-size: 14px;
-        }
-
-        .payment-total strong {
-            display: block;
-            margin-top: 4px;
-            color: #ff4757;
-            font-size: 30px;
-            font-weight: 800;
-        }
-
-        .qr-box {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-            background: #fff;
-            border: 2px dashed #e2e8f0;
-            border-radius: 20px;
-            margin-bottom: 18px;
-        }
-
-        .qr-box img {
-            width: 210px;
-            height: 210px;
-        }
-
-        .payment-note {
-            background: #f7fafc;
-            padding: 12px;
-            border-radius: 12px;
-            color: #718096;
-            font-size: 13px;
-            margin-bottom: 20px;
-        }
-
-        .payment-method {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-
-        .payment-method label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .payment-method select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #cbd5e0;
-            border-radius: 10px;
-            outline: none;
-            font-size: 15px;
-        }
-
-        .payment-actions {
-            display: flex;
-            gap: 12px;
-        }
-
-        .payment-actions button {
-            flex: 1;
-            padding: 14px;
-            border-radius: 10px;
-            font-weight: 700;
-        }
-
-        .cancel-payment {
-            border: 1px solid #cbd5e0;
-            background: #fff;
-            color: #4a5568;
-            cursor: pointer;
-        }
-
-        /* Notification */
-        .notification {
-            position: fixed;
-            right: 25px;
-            bottom: 25px;
-            padding: 16px 24px;
-            background: #2d3748;
-            color: #fff;
-            border-radius: 14px;
-            z-index: 5000;
-            transform: translateY(100px);
-            opacity: 0;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .notification.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        /* Responsive */
-        @media (max-width: 1000px) {
-            .categories { grid-template-columns: repeat(3, 1fr); }
-            .products { grid-template-columns: repeat(2, 1fr); }
-            .coming-grid, .benefits { grid-template-columns: repeat(2, 1fr); }
-            .nav-links { gap: 16px; }
-        }
-
-        @media (max-width: 700px) {
-            .navbar { flex-wrap: wrap; gap: 15px; }
-            .nav-links { order: 3; width: 100%; justify-content: center; overflow-x: auto; }
-            .hero { height: 420px; }
-            .hero-content h1 { font-size: 38px; }
-            .categories { grid-template-columns: repeat(2, 1fr); }
-            .products, .coming-grid, .benefits { grid-template-columns: 1fr; }
-            .footer-content { grid-template-columns: 1fr; }
-            .section { padding: 50px 5%; }
-            .cart-panel { width: 100%; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FoodStore - ហាងលក់អាហារ និងភេសជ្ជៈ Online">
+  <title>FoodStore | ហាងអាហារ Online</title>
+
+  <style>
+    /* =========================
+       Base
+    ========================== */
+    :root{
+      --primary:#e53935;
+      --primary-dark:#c62828;
+      --accent:#ffb300;
+      --green:#159447;
+      --text:#222;
+      --muted:#777;
+      --line:#ececec;
+      --bg:#f6f7f9;
+      --card:#fff;
+      --dark:#171717;
+      --dark-card:#222;
+      --shadow:0 4px 18px rgba(0,0,0,.07);
+      --radius:12px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:"Khmer OS Battambang","Battambang","Noto Sans Khmer",Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.7;
+    }
+    button,input,select,textarea{font:inherit}
+    button{cursor:pointer}
+    a{text-decoration:none;color:inherit}
+    img{display:block;max-width:100%}
+    .container{width:min(1180px,92%);margin:auto}
+
+    /* =========================
+       Top notice
+    ========================== */
+    .topbar{
+      background:#fff;
+      border-bottom:1px solid var(--line);
+      font-size:13px;
+      color:#666;
+    }
+    .topbar-inner{
+      min-height:36px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+    }
+    .topbar span{display:flex;align-items:center;gap:7px}
+
+    /* =========================
+       Header
+    ========================== */
+    .header{
+      background:#fff;
+      position:sticky;
+      top:0;
+      z-index:50;
+      box-shadow:0 2px 12px rgba(0,0,0,.06);
+    }
+    .header-main{
+      min-height:76px;
+      display:flex;
+      align-items:center;
+      gap:25px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:205px;
+    }
+    .brand-mark{
+      width:44px;height:44px;border-radius:12px;
+      background:var(--primary);
+      display:grid;place-items:center;
+      color:#fff;font-size:24px;
+      box-shadow:0 5px 14px rgba(229,57,53,.22);
+    }
+    .brand strong{
+      display:block;
+      font-size:22px;
+      line-height:1.15;
+      color:#222;
+    }
+    .brand small{color:#999;font-size:11px}
+
+    .search{
+      flex:1;
+      display:flex;
+      height:44px;
+      border:1px solid #ddd;
+      border-radius:7px;
+      overflow:hidden;
+      background:#fff;
+    }
+    .search input{
+      flex:1;border:0;outline:0;padding:0 15px;
+      color:#333;
+      min-width:0;
+    }
+    .search button{
+      width:52px;border:0;background:var(--primary);color:#fff;
+      font-size:18px;
+    }
+    .header-actions{display:flex;align-items:center;gap:8px}
+    .head-btn{
+      border:0;background:#fff;min-width:60px;
+      color:#555;position:relative;padding:5px;
+      font-size:12px;
+    }
+    .head-btn .icon{font-size:21px;display:block;line-height:1.2}
+    .badge{
+      position:absolute;top:0;right:4px;
+      min-width:18px;height:18px;padding:0 4px;
+      border-radius:99px;background:var(--primary);color:#fff;
+      font-size:10px;display:grid;place-items:center;
+    }
+
+    .nav{
+      border-top:1px solid #f3f3f3;
+      background:#fff;
+    }
+    .nav-inner{
+      min-height:45px;display:flex;align-items:center;gap:25px;
+      overflow:auto;
+    }
+    .nav a{
+      white-space:nowrap;font-size:14px;color:#444;
+      padding:10px 2px;
+      border-bottom:2px solid transparent;
+    }
+    .nav a:hover,.nav a.active{color:var(--primary);border-bottom-color:var(--primary)}
+
+    /* =========================
+       Hero / categories
+    ========================== */
+    .hero{
+      padding:18px 0 8px;
+    }
+    .hero-box{
+      min-height:275px;
+      border-radius:14px;
+      overflow:hidden;
+      position:relative;
+      background:
+        linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.25)),
+        url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1400&q=85")
+        center/cover;
+      color:#fff;
+      display:flex;align-items:center;
+    }
+    .hero-content{padding:35px;max-width:600px}
+    .hero-tag{
+      display:inline-block;background:var(--accent);color:#222;
+      padding:3px 12px;border-radius:30px;font-size:12px;
+      margin-bottom:9px;font-weight:bold;
+    }
+    .hero h1{font-size:34px;line-height:1.35;margin-bottom:8px}
+    .hero p{font-size:15px;color:#eee;margin-bottom:17px}
+    .hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{
+      border:0;border-radius:7px;padding:9px 18px;
+      font-weight:bold;
+    }
+    .btn-primary{background:var(--primary);color:#fff}
+    .btn-primary:hover{background:var(--primary-dark)}
+    .btn-light{background:#fff;color:#333}
+
+    .quick-cats{
+      display:grid;grid-template-columns:repeat(6,1fr);
+      gap:12px;margin:16px 0 22px;
+    }
+    .cat{
+      background:#fff;border:1px solid var(--line);border-radius:10px;
+      padding:12px 7px;text-align:center;transition:.2s;
+    }
+    .cat:hover{border-color:#ddd;transform:translateY(-2px);box-shadow:var(--shadow)}
+    .cat .cat-icon{font-size:27px;line-height:1.2}
+    .cat b{display:block;font-size:13px;margin-top:4px}
+    .cat small{color:#999;font-size:10px}
+
+    /* =========================
+       Common section
+    ========================== */
+    .section{padding:14px 0 24px}
+    .section-head{
+      display:flex;justify-content:space-between;align-items:end;
+      gap:15px;margin-bottom:12px;
+    }
+    .section-title h2{font-size:22px;line-height:1.4}
+    .section-title p{font-size:12px;color:#888}
+    .see-all{font-size:13px;color:var(--primary);white-space:nowrap}
+
+    /* =========================
+       Product cards
+    ========================== */
+    .products{
+      display:grid;grid-template-columns:repeat(5,1fr);gap:13px;
+    }
+    .product{
+      background:var(--card);border:1px solid var(--line);
+      border-radius:10px;overflow:hidden;position:relative;
+      transition:.2s;
+    }
+    .product:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+    .product-img{height:170px;position:relative;background:#eee;overflow:hidden}
+    .product-img img{width:100%;height:100%;object-fit:cover;transition:.35s}
+    .product:hover .product-img img{transform:scale(1.04)}
+    .tag{
+      position:absolute;left:8px;top:8px;
+      background:var(--primary);color:#fff;
+      padding:2px 7px;border-radius:4px;font-size:10px;
+    }
+    .heart{
+      position:absolute;right:8px;top:8px;
+      width:30px;height:30px;border:0;border-radius:50%;
+      background:rgba(255,255,255,.94);font-size:17px;color:#888;
+    }
+    .heart.liked{color:var(--primary)}
+    .product-body{padding:10px}
+    .product-name{
+      font-size:14px;font-weight:bold;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .product-desc{
+      font-size:11px;color:#999;
+      height:34px;overflow:hidden;margin-top:2px;
+    }
+    .rating{font-size:11px;color:#f5a400;margin:5px 0}
+    .rating span{color:#999;margin-left:4px}
+    .product-bottom{
+      display:flex;align-items:end;justify-content:space-between;gap:6px;
+      margin-top:6px;
+    }
+    .price{font-size:16px;font-weight:bold;color:var(--primary)}
+    .old-price{font-size:10px;color:#aaa;text-decoration:line-through}
+    .add{
+      border:0;background:#fff0f0;color:var(--primary);
+      border:1px solid #ffd2d2;border-radius:6px;
+      width:34px;height:32px;font-size:20px;line-height:1;
+    }
+    .add:hover{background:var(--primary);color:#fff}
+
+    /* =========================
+       Shop layout / filters
+    ========================== */
+    .shop-layout{
+      display:grid;grid-template-columns:200px 1fr;gap:17px;
+    }
+    .filter{
+      background:#fff;border:1px solid var(--line);
+      border-radius:10px;padding:14px;height:max-content;
+      position:sticky;top:145px;
+    }
+    .filter h3{font-size:15px;margin-bottom:10px}
+    .filter button{
+      display:block;width:100%;text-align:left;
+      border:0;background:none;padding:7px 4px;
+      color:#555;font-size:13px;border-radius:5px;
+    }
+    .filter button:hover,.filter button.active{
+      background:#fff0f0;color:var(--primary);font-weight:bold;
+    }
+    .shop-main{min-width:0}
+    .shop-tools{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:10px;margin-bottom:10px;
+    }
+    .result-text{font-size:13px;color:#777}
+    .sort{
+      border:1px solid #ddd;background:#fff;border-radius:6px;
+      padding:7px 10px;outline:0;font-size:12px;
+    }
+
+    /* =========================
+       Promo / service strip
+    ========================== */
+    .promo-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:13px;
+    }
+    .promo{
+      background:#fff;border:1px solid var(--line);
+      border-radius:10px;padding:17px;display:flex;gap:12px;
+    }
+    .promo-icon{
+      width:42px;height:42px;border-radius:9px;
+      display:grid;place-items:center;background:#fff0f0;
+      font-size:22px;flex:none;
+    }
+    .promo h3{font-size:14px}
+    .promo p{font-size:11px;color:#888}
+
+    /* =========================
+       Delivery / order
+    ========================== */
+    .order-area{
+      display:grid;grid-template-columns:1fr 1fr;gap:15px;
+    }
+    .info-card{
+      background:#fff;border:1px solid var(--line);
+      border-radius:10px;padding:18px;
+    }
+    .info-card h3{font-size:17px;margin-bottom:8px}
+    .info-card p{font-size:12px;color:#777}
+    .delivery-steps{display:grid;gap:9px;margin-top:12px}
+    .step{display:flex;gap:10px;align-items:center}
+    .step-num{
+      width:28px;height:28px;border-radius:50%;background:#fff0f0;
+      color:var(--primary);display:grid;place-items:center;font-weight:bold;
+      flex:none;font-size:12px;
+    }
+
+    /* =========================
+       Footer
+    ========================== */
+    footer{background:#202020;color:#ccc;margin-top:25px}
+    .footer-main{
+      padding:30px 0;
+      display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:25px;
+    }
+    footer h3{color:#fff;font-size:16px;margin-bottom:8px}
+    footer p,footer li{font-size:12px;color:#aaa}
+    footer ul{list-style:none}
+    footer li{margin:4px 0}
+    .footer-bottom{
+      border-top:1px solid #333;padding:12px 0;
+      font-size:11px;color:#777;text-align:center;
+    }
+
+    /* =========================
+       Modals
+    ========================== */
+    .overlay{
+      position:fixed;inset:0;background:rgba(0,0,0,.55);
+      display:none;align-items:center;justify-content:center;
+      z-index:100;padding:15px;
+    }
+    .overlay.show{display:flex}
+    .modal{
+      width:min(520px,100%);max-height:90vh;overflow:auto;
+      background:#fff;border-radius:12px;
+      box-shadow:0 20px 60px rgba(0,0,0,.25);
+    }
+    .modal-head{
+      padding:15px 18px;border-bottom:1px solid var(--line);
+      display:flex;justify-content:space-between;align-items:center;
+    }
+    .modal-head h3{font-size:17px}
+    .close{
+      width:32px;height:32px;border:0;background:#f3f3f3;border-radius:6px;
+      font-size:18px;
+    }
+    .modal-body{padding:18px}
+    .form-grid{display:grid;gap:11px}
+    label{font-size:12px;color:#555;display:block;margin-bottom:4px}
+    input,textarea,select{
+      width:100%;border:1px solid #ddd;border-radius:7px;
+      padding:9px 11px;outline:0;background:#fff;
+    }
+    input:focus,textarea:focus,select:focus{border-color:#e99}
+    textarea{min-height:80px;resize:vertical}
+    .form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}
+
+    /* Cart */
+    .cart-list{display:grid;gap:8px}
+    .cart-item{
+      display:grid;grid-template-columns:55px 1fr auto;
+      gap:9px;align-items:center;padding:8px 0;
+      border-bottom:1px solid #eee;
+    }
+    .cart-item img{width:55px;height:55px;object-fit:cover;border-radius:7px}
+    .cart-item b{font-size:12px}
+    .cart-item small{display:block;color:#999;font-size:10px}
+    .qty{display:flex;align-items:center;gap:4px;margin-top:3px}
+    .qty button{
+      width:22px;height:22px;border:1px solid #ddd;background:#fff;border-radius:4px;
+    }
+    .cart-total{
+      display:flex;justify-content:space-between;
+      padding-top:13px;margin-top:8px;border-top:2px solid #eee;
+      font-weight:bold;
+    }
+    .empty{text-align:center;padding:30px;color:#999;font-size:13px}
+
+    /* Toast */
+    .toast{
+      position:fixed;right:18px;bottom:18px;z-index:200;
+      background:#222;color:#fff;padding:10px 15px;border-radius:7px;
+      font-size:12px;box-shadow:0 8px 25px rgba(0,0,0,.2);
+      transform:translateY(20px);opacity:0;pointer-events:none;
+      transition:.25s;
+    }
+    .toast.show{transform:translateY(0);opacity:1}
+
+    /* =========================
+       Responsive
+    ========================== */
+    @media(max-width:1000px){
+      .products{grid-template-columns:repeat(4,1fr)}
+      .quick-cats{grid-template-columns:repeat(3,1fr)}
+      .footer-main{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:760px){
+      .topbar{display:none}
+      .header-main{min-height:64px;gap:10px;flex-wrap:wrap;padding:8px 0}
+      .brand{min-width:auto}
+      .brand strong{font-size:18px}
+      .brand small{display:none}
+      .search{order:3;flex-basis:100%;height:40px}
+      .header-actions{margin-left:auto}
+      .head-btn{min-width:43px}
+      .head-btn .label{display:none}
+      .nav-inner{gap:18px}
+      .hero-box{min-height:280px}
+      .hero-content{padding:25px}
+      .hero h1{font-size:26px}
+      .products{grid-template-columns:repeat(2,1fr);gap:9px}
+      .product-img{height:150px}
+      .shop-layout{grid-template-columns:1fr}
+      .filter{position:static;display:flex;gap:5px;overflow:auto;padding:8px}
+      .filter h3{display:none}
+      .filter button{white-space:nowrap;width:auto;padding:6px 10px}
+      .promo-grid,.order-area{grid-template-columns:1fr}
+      .footer-main{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:430px){
+      .quick-cats{grid-template-columns:repeat(3,1fr);gap:7px}
+      .cat{padding:8px 3px}
+      .cat .cat-icon{font-size:23px}
+      .hero p{font-size:13px}
+      .product-img{height:135px}
+      .product-body{padding:8px}
+      .product-desc{display:none}
+      .footer-main{grid-template-columns:1fr}
+    }
+
+    /* =========================
+       Dark mode
+    ========================== */
+    body.dark{
+      --text:#f2f2f2;--muted:#aaa;--line:#333;
+      --bg:#111;--card:#1d1d1d;
+      background:#111;color:#f2f2f2;
+    }
+    body.dark .header,
+    body.dark .nav,
+    body.dark .topbar,
+    body.dark .search,
+    body.dark .head-btn,
+    body.dark .cat,
+    body.dark .filter,
+    body.dark .promo,
+    body.dark .info-card,
+    body.dark .modal,
+    body.dark .sort,
+    body.dark input,
+    body.dark textarea,
+    body.dark select{background:#1d1d1d;color:#eee;border-color:#333}
+    body.dark .brand strong,
+    body.dark .nav a,
+    body.dark .filter button,
+    body.dark label{color:#ddd}
+    body.dark .search input{background:#1d1d1d;color:#fff}
+    body.dark .product{background:#1d1d1d;border-color:#333}
+    body.dark .old-price,body.dark .product-desc,body.dark .result-text{color:#999}
+    body.dark .heart{background:#2b2b2b}
+    body.dark .add{background:#2b1b1b;border-color:#633}
+    body.dark .cart-item{border-color:#333}
+    body.dark .cart-total{border-color:#444}
+    body.dark .close{background:#333;color:#fff}
+  </style>
 </head>
 
 <body>
-    <header class="navbar">
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <span>🚚 ដឹកជញ្ជូនទូទាំងក្រុង • បញ្ជាទិញងាយៗតាម Online</span>
+      <span>📞 ទំនាក់ទំនង: 012 345 678</span>
+    </div>
+  </div>
 
-        <a href="#" class="logo">
-            <div class="logo-icon">🍛</div>
+  <header class="header">
+    <div class="container header-main">
+      <a href="#home" class="brand">
+        <div class="brand-mark">🍴</div>
+        <div>
+          <strong>FoodStore</strong>
+          <small>អាហារឆ្ងាញ់ • តម្លៃសមរម្យ</small>
+        </div>
+      </a>
 
-            <div class="logo-text">
-                FoodStore
-                <small>អាហារ & ភេសជ្ជៈ</small>
-            </div>
-        </a>
+      <form class="search" id="searchForm">
+        <input id="searchInput" type="search" placeholder="ស្វែងរកម្ហូប ភេសជ្ជៈ ឬទំនិញ..." autocomplete="off">
+        <button aria-label="ស្វែងរក">⌕</button>
+      </form>
 
-        <nav class="nav-links">
-            <a href="#home">ទំព័រដើម</a>
-            <a href="#menu">មុខម្ហូប</a>
-            <a href="#coming">នឹងមកដល់</a>
-            <a href="#benefits">អត្ថប្រយោជន៍</a>
-        </nav>
-
-        <button class="cart-btn" onclick="openCart()">
-            🛒 កន្ត្រក
-            <span id="cartCount">0</span>
+      <div class="header-actions">
+        <button class="head-btn" id="customerBtn" title="គណនីរបស់ខ្ញុំ">
+          <span class="icon">👤</span><span class="label">គណនី</span>
         </button>
+        <button class="head-btn" id="themeBtn" title="ប្ដូររូបរាង">
+          <span class="icon">☾</span><span class="label">Mode</span>
+        </button>
+        <button class="head-btn" id="cartBtn" title="កន្ត្រកទំនិញ">
+          <span class="icon">🛒</span><span class="label">កន្ត្រក</span>
+          <span class="badge" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
 
-    </header>
+    <nav class="nav">
+      <div class="container nav-inner">
+        <a class="active" href="#home">ទំព័រដើម</a>
+        <a href="#best">ទំនិញលក់ដាច់</a>
+        <a href="#shop">ហាងទាំងអស់</a>
+        <a href="#delivery">ការដឹកជញ្ជូន</a>
+        <a href="#service">សេវាកម្ម</a>
+        <a href="#footer">អំពីហាង</a>
+      </div>
+    </nav>
+  </header>
 
-    <section class="hero" id="home">
-
-        <div class="slide active"
-            style="background-image: url('https://i.pinimg.com/736x/1b/bb/ba/1bbbba8f7cc9cc596c325fc1e164e364.jpg');">
-
-            <div class="hero-content">
-                <h1>Delicious Food</h1>
-
-                <p>
-                    រសជាតិឆ្ងាញ់ ស្រស់ថ្មី និងតម្លៃសមរម្យ
-                </p>
-
-                <a href="#menu" class="hero-btn">
-                    មើលមុខម្ហូប
-                </a>
-            </div>
-
+  <main id="home">
+    <section class="hero container">
+      <div class="hero-box">
+        <div class="hero-content">
+          <span class="hero-tag">ប្រូម៉ូសិនប្រចាំថ្ងៃ</span>
+          <h1>ម្ហូបឆ្ងាញ់ៗ<br>បញ្ជាទិញពីផ្ទះបានភ្លាមៗ</h1>
+          <p>ជ្រើសរើសម្ហូបដែលអ្នកចូលចិត្ត បញ្ចូលក្នុងកន្ត្រក ហើយបញ្ជាទិញបានយ៉ាងងាយស្រួល។</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#shop">មើលទំនិញទាំងអស់</a>
+            <a class="btn btn-light" href="#delivery">របៀបដឹកជញ្ជូន</a>
+          </div>
         </div>
+      </div>
 
-
-        <div class="slide"
-            style="background-image: url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1600&q=80');">
-
-            <div class="hero-content">
-                <h1>Fresh Burger</h1>
-
-                <p>
-                    Burger ស្រស់ៗ រៀបចំជូនរាល់ថ្ងៃ
-                </p>
-
-                <a href="#menu" class="hero-btn">
-                    Order Now
-                </a>
-            </div>
-
-        </div>
-
-
-        <div class="slide"
-            style="background-image: url('https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=1600&q=80');">
-
-            <div class="hero-content">
-                <h1>Hot Pizza</h1>
-
-                <p>
-                    Pizza ក្តៅៗ មានរសជាតិពិសេស
-                </p>
-
-                <a href="#menu" class="hero-btn">
-                    មើលមុខម្ហូប
-                </a>
-            </div>
-
-        </div>
-
-
-        <div class="slide"
-            style="background-image: url('https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=1600&q=80');">
-
-            <div class="hero-content">
-                <h1>Fresh Drinks</h1>
-
-                <p>
-                    ភេសជ្ជៈត្រជាក់ៗ សម្រាប់ថ្ងៃក្តៅ
-                </p>
-
-                <a href="#menu" class="hero-btn">
-                    Order Now
-                </a>
-            </div>
-
-        </div>
-
-
-        <div class="slider-dots">
-            <button class="dot active" onclick="showSlide(0)"></button>
-            <button class="dot" onclick="showSlide(1)"></button>
-            <button class="dot" onclick="showSlide(2)"></button>
-            <button class="dot" onclick="showSlide(3)"></button>
-        </div>
-
+      <div class="quick-cats">
+        <a class="cat" href="#shop" data-category-link="បាយ">
+          <div class="cat-icon">🍚</div><b>បាយ & ម្ហូប</b><small>មុខម្ហូបប្រចាំថ្ងៃ</small>
+        </a>
+        <a class="cat" href="#shop" data-category-link="Fast Food">
+          <div class="cat-icon">🍔</div><b>Fast Food</b><small>ប៊ឺហ្គឺ & ភីហ្សា</small>
+        </a>
+        <a class="cat" href="#shop" data-category-link="ភេសជ្ជៈ">
+          <div class="cat-icon">🥤</div><b>ភេសជ្ជៈ</b><small>ត្រជាក់ៗ</small>
+        </a>
+        <a class="cat" href="#shop" data-category-link="បង្អែម">
+          <div class="cat-icon">🍰</div><b>បង្អែម</b><small>ផ្អែមឆ្ងាញ់</small>
+        </a>
+        <a class="cat" href="#shop" data-category-link="Snack">
+          <div class="cat-icon">🍟</div><b>Snack</b><small>ញ៉ាំលេង</small>
+        </a>
+        <a class="cat" href="#shop" data-category-link="ប្រូម៉ូសិន">
+          <div class="cat-icon">🏷️</div><b>ប្រូម៉ូសិន</b><small>តម្លៃពិសេស</small>
+        </a>
+      </div>
     </section>
 
-    <section class="section">
-
+    <section class="section container" id="best">
+      <div class="section-head">
         <div class="section-title">
-            <h2>ប្រភេទអាហារ</h2>
-            <p>ជ្រើសរើសអាហារដែលអ្នកចូលចិត្ត</p>
+          <h2>🔥 ទំនិញលក់ដាច់</h2>
+          <p>មុខម្ហូបដែលអតិថិជនជ្រើសរើសច្រើន</p>
         </div>
-
-        <div class="categories">
-
-            <div class="category-card">
-                <div class="category-icon">🍚</div>
-                <h3>Rice & Meals</h3>
-            </div>
-
-            <div class="category-card">
-                <div class="category-icon">🍔</div>
-                <h3>Burgers</h3>
-            </div>
-
-            <div class="category-card">
-                <div class="category-icon">🥤</div>
-                <h3>Drinks</h3>
-            </div>
-
-            <div class="category-card">
-                <div class="category-icon">🍰</div>
-                <h3>Desserts</h3>
-            </div>
-
-            <div class="category-card">
-                <div class="category-icon">🍟</div>
-                <h3>Snacks</h3>
-            </div>
-
-            <div class="category-card">
-                <div class="category-icon">🍕</div>
-                <h3>Pizza</h3>
-            </div>
-
-        </div>
-
+        <a class="see-all" href="#shop">មើលទាំងអស់ →</a>
+      </div>
+      <div class="products" id="bestProducts"></div>
     </section>
 
-    <section class="section" id="menu">
-
+    <section class="section container" id="shop">
+      <div class="section-head">
         <div class="section-title">
-            <h2>មុខម្ហូបពេញនិយម</h2>
-            <p>មុខម្ហូបឆ្ងាញ់ៗ ត្រៀមសម្រាប់អ្នក</p>
+          <h2>🛍️ ហាងអាហារ Online</h2>
+          <p>ជ្រើសរើសទំនិញ → ដាក់កន្ត្រក → បញ្ជាទិញ</p>
         </div>
+      </div>
 
+      <div class="shop-layout">
+        <aside class="filter">
+          <h3>ប្រភេទទំនិញ</h3>
+          <button class="active" data-filter="all">ទាំងអស់</button>
+          <button data-filter="បាយ">បាយ & ម្ហូប</button>
+          <button data-filter="Fast Food">Fast Food</button>
+          <button data-filter="ភេសជ្ជៈ">ភេសជ្ជៈ</button>
+          <button data-filter="បង្អែម">បង្អែម</button>
+          <button data-filter="Snack">Snack</button>
+        </aside>
 
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="🔍 ស្វែងរកមុខម្ហូប..." oninput="searchProducts()">
+        <div class="shop-main">
+          <div class="shop-tools">
+            <div class="result-text" id="resultText">កំពុងបង្ហាញទំនិញទាំងអស់</div>
+            <select class="sort" id="sortSelect">
+              <option value="default">រៀបតាមលំនាំដើម</option>
+              <option value="low">តម្លៃទាប → ខ្ពស់</option>
+              <option value="high">តម្លៃខ្ពស់ → ទាប</option>
+              <option value="rating">ពិន្ទុខ្ពស់ជាងគេ</option>
+            </select>
+          </div>
+          <div class="products" id="allProducts"></div>
         </div>
-
-
-        <div class="products" id="productsContainer">
-
-            <div class="product-card" data-name="Chicken Rice">
-                <div class="product-card-img-wrapper">
-                    <img class="product-image"
-                        src="https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80"
-                        alt="Chicken Rice">
-                </div>
-
-                <div class="product-info">
-
-                    <h3>Chicken Rice</h3>
-
-                    <p class="product-description">
-                        បាយមាន់រសជាតិឆ្ងាញ់
-                    </p>
-
-                    <div class="product-bottom">
-                        <span class="price">$4.50</span>
-
-                        <button class="add-cart"
-                            onclick="addToCart('Chicken Rice', 4.50, 'https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80')">
-                            + បន្ថែម
-                        </button>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="product-card" data-name="Pepperoni Pizza">
-                <div class="product-card-img-wrapper">
-                    <img class="product-image"
-                        src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80"
-                        alt="Pepperoni Pizza">
-                </div>
-
-                <div class="product-info">
-
-                    <h3>Pepperoni Pizza</h3>
-
-                    <p class="product-description">
-                        Pizza ឈីស និង Pepperoni
-                    </p>
-
-                    <div class="product-bottom">
-                        <span class="price">$7.50</span>
-
-                        <button class="add-cart"
-                            onclick="addToCart('Pepperoni Pizza', 7.50, 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80')">
-                            + បន្ថែម
-                        </button>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="product-card" data-name="Beef Burger">
-                <div class="product-card-img-wrapper">
-                    <img class="product-image"
-                        src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80"
-                        alt="Beef Burger">
-                </div>
-
-                <div class="product-info">
-
-                    <h3>Beef Burger</h3>
-
-                    <p class="product-description">
-                        Burger សាច់គោ និងបន្លែស្រស់
-                    </p>
-
-                    <div class="product-bottom">
-                        <span class="price">$5.50</span>
-
-                        <button class="add-cart"
-                            onclick="addToCart('Beef Burger', 5.50, 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80')">
-                            + បន្ថែម
-                        </button>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="product-card" data-name="Iced Coffee">
-                <div class="product-card-img-wrapper">
-                    <img class="product-image"
-                        src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=800&q=80"
-                        alt="Iced Coffee">
-                </div>
-
-                <div class="product-info">
-
-                    <h3>Iced Coffee</h3>
-
-                    <p class="product-description">
-                        កាហ្វេទឹកកកត្រជាក់ៗ
-                    </p>
-
-                    <div class="product-bottom">
-                        <span class="price">$2.50</span>
-
-                        <button class="add-cart"
-                            onclick="addToCart('Iced Coffee', 2.50, 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=800&q=80')">
-                            + បន្ថែម
-                        </button>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="product-card" data-name="French Fries">
-                <div class="product-card-img-wrapper">
-                    <img class="product-image"
-                        src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80"
-                        alt="French Fries">
-                </div>
-
-                <div class="product-info">
-
-                    <h3>French Fries</h3>
-
-                    <p class="product-description">
-                        ដំឡូងបារាំងចៀនស្រួយ
-                    </p>
-
-                    <div class="product-bottom">
-                        <span class="price">$2.00</span>
-
-                        <button class="add-cart"
-                            onclick="addToCart('French Fries', 2.00, 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80')">
-                            + បន្ថែម
-                        </button>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="product-card" data-name="Chocolate Cake">
-                <div class="product-card-img-wrapper">
-                    <img class="product-image"
-                        src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80"
-                        alt="Chocolate Cake">
-                </div>
-
-                <div class="product-info">
-
-                    <h3>Chocolate Cake</h3>
-
-                    <p class="product-description">
-                        នំ Chocolate ទន់ និងផ្អែម
-                    </p>
-
-                    <div class="product-bottom">
-                        <span class="price">$3.50</span>
-
-                        <button class="add-cart"
-                            onclick="addToCart('Chocolate Cake', 3.50, 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80')">
-                            + បន្ថែម
-                        </button>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="product-card" data-name="Fresh Fruit Juice">
-                <div class="product-card-img-wrapper">
-                    <img class="product-image"
-                        src="https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=800&q=80"
-                        alt="Fresh Fruit Juice">
-                </div>
-
-                <div class="product-info">
-
-                    <h3>Fresh Fruit Juice</h3>
-
-                    <p class="product-description">
-                        ទឹកផ្លែឈើស្រស់ៗ
-                    </p>
-
-                    <div class="product-bottom">
-                        <span class="price">$2.50</span>
-
-                        <button class="add-cart"
-                            onclick="addToCart('Fresh Fruit Juice', 2.50, 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=800&q=80')">
-                            + បន្ថែម
-                        </button>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="product-card" data-name="Chicken Sandwich">
-                <div class="product-card-img-wrapper">
-                    <img class="product-image"
-                        src="https://images.unsplash.com/photo-1521390188846-e2a3a97453a0?auto=format&fit=crop&w=800&q=80"
-                        alt="Chicken Sandwich">
-                </div>
-
-                <div class="product-info">
-
-                    <h3>Chicken Sandwich</h3>
-
-                    <p class="product-description">
-                        Sandwich សាច់មាន់ស្រស់
-                    </p>
-
-                    <div class="product-bottom">
-                        <span class="price">$4.00</span>
-
-                        <button class="add-cart"
-                            onclick="addToCart('Chicken Sandwich', 4.00, 'https://images.unsplash.com/photo-1521390188846-e2a3a97453a0?auto=format&fit=crop&w=800&q=80')">
-                            + បន្ថែម
-                        </button>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
+      </div>
     </section>
 
-    <section class="section coming-soon" id="coming">
-
+    <section class="section container" id="service">
+      <div class="section-head">
         <div class="section-title">
-            <h2>មុខម្ហូបនឹងមកដល់</h2>
-            <p>ផលិតផលថ្មីៗនឹងមកដល់ឆាប់ៗនេះ</p>
+          <h2>✨ ហេតុអ្វីអតិថិជនជ្រើសរើសយើង?</h2>
+          <p>សេវាកម្មសាមញ្ញ តែផ្តោតលើភាពងាយស្រួលរបស់អ្នក</p>
         </div>
+      </div>
 
-        <div class="coming-grid">
-
-            <div class="coming-card">
-                <div class="icon">🌮</div>
-                <h3>Tacos</h3>
-                <p>Coming Soon</p>
-            </div>
-
-            <div class="coming-card">
-                <div class="icon">🍜</div>
-                <h3>Noodles</h3>
-                <p>Coming Soon</p>
-            </div>
-
-            <div class="coming-card">
-                <div class="icon">🍩</div>
-                <h3>Donuts</h3>
-                <p>Coming Soon</p>
-            </div>
-
-            <div class="coming-card">
-                <div class="icon">🧋</div>
-                <h3>Bubble Tea</h3>
-                <p>Coming Soon</p>
-            </div>
-
+      <div class="promo-grid">
+        <div class="promo">
+          <div class="promo-icon">🚚</div>
+          <div><h3>ដឹកជញ្ជូនដល់ផ្ទះ</h3><p>បញ្ជាទិញរួច រង់ចាំទទួលនៅទីតាំងដែលអ្នកបានបញ្ចូល។</p></div>
         </div>
-
+        <div class="promo">
+          <div class="promo-icon">💵</div>
+          <div><h3>តម្លៃបង្ហាញច្បាស់</h3><p>មើលតម្លៃមុនដាក់កន្ត្រក និងឃើញសរុបមុនបញ្ជាទិញ។</p></div>
+        </div>
+        <div class="promo">
+          <div class="promo-icon">📱</div>
+          <div><h3>បញ្ជាទិញងាយ</h3><p>មិនចាំបាច់ចុះឈ្មោះស្មុគស្មាញ។ បញ្ចូលព័ត៌មានសម្រាប់ការដឹកជញ្ជូនបាន។</p></div>
+        </div>
+      </div>
     </section>
 
-    <section class="section" id="benefits">
-
+    <section class="section container" id="delivery">
+      <div class="section-head">
         <div class="section-title">
-            <h2>ហេតុអ្វីជ្រើសរើស FoodStore?</h2>
-            <p>សេវាកម្មល្អ និងអាហារដែលមានគុណភាព</p>
+          <h2>🚚 ការបញ្ជាទិញ និងដឹកជញ្ជូន</h2>
+          <p>ដំណើរការងាយៗ ៤ ជំហាន</p>
         </div>
-
-        <div class="benefits">
-
-            <div class="benefit-card">
-                <div class="benefit-icon">🚚</div>
-                <h3>Fast Delivery</h3>
-                <p>ដឹកជញ្ជូនលឿន និងងាយស្រួល</p>
-            </div>
-
-            <div class="benefit-card">
-                <div class="benefit-icon">🥗</div>
-                <h3>Fresh Food</h3>
-                <p>អាហារស្រស់ និងមានគុណភាព</p>
-            </div>
-
-            <div class="benefit-card">
-                <div class="benefit-icon">💰</div>
-                <h3>Good Price</h3>
-                <p>តម្លៃសមរម្យសម្រាប់អ្នក</p>
-            </div>
-
-            <div class="benefit-card">
-                <div class="benefit-icon">⭐</div>
-                <h3>Best Service</h3>
-                <p>សេវាកម្មរួសរាយ និងយកចិត្តទុកដាក់</p>
-            </div>
-
+      </div>
+      <div class="order-area">
+        <div class="info-card">
+          <h3>របៀបបញ្ជាទិញ</h3>
+          <p>អ្នកអាចបញ្ជាទិញដោយផ្ទាល់ពីគេហទំព័រ។ ព័ត៌មានការបញ្ជាទិញត្រូវបានរក្សាទុកនៅលើ Browser របស់អ្នកសម្រាប់ Demo នេះ។</p>
+          <div class="delivery-steps">
+            <div class="step"><span class="step-num">1</span><span>ជ្រើសរើសម្ហូបដែលចូលចិត្ត</span></div>
+            <div class="step"><span class="step-num">2</span><span>ចុច “+” ដើម្បីដាក់ចូលកន្ត្រក</span></div>
+            <div class="step"><span class="step-num">3</span><span>បញ្ចូលឈ្មោះ លេខទូរស័ព្ទ និងទីតាំង</span></div>
+            <div class="step"><span class="step-num">4</span><span>បញ្ជាក់ការបញ្ជាទិញ និងរង់ចាំដឹក</span></div>
+          </div>
         </div>
-
+        <div class="info-card">
+          <h3>📦 ស្ថានភាពការបញ្ជាទិញ</h3>
+          <div id="orderStatus">
+            <p>អ្នកមិនទាន់មានការបញ្ជាទិញចុងក្រោយទេ។</p>
+          </div>
+          <button class="btn btn-primary" style="margin-top:14px" id="deliveryCustomerBtn">បញ្ចូលព័ត៌មានអ្នកទទួល</button>
+        </div>
+      </div>
     </section>
+  </main>
 
-    <footer>
+  <footer id="footer">
+    <div class="container footer-main">
+      <div>
+        <h3>FoodStore</h3>
+        <p>ហាងអាហារ និងភេសជ្ជៈ Online សម្រាប់ Demo។ រចនាឡើងឱ្យមានអារម្មណ៍ដូច Online Shop ទូទៅ និងងាយស្រួលប្រើលើទូរស័ព្ទ។</p>
+      </div>
+      <div>
+        <h3>តំណភ្ជាប់</h3>
+        <ul>
+          <li><a href="#home">ទំព័រដើម</a></li>
+          <li><a href="#best">ទំនិញលក់ដាច់</a></li>
+          <li><a href="#shop">ហាងទាំងអស់</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>ជំនួយ</h3>
+        <ul>
+          <li>របៀបបញ្ជាទិញ</li>
+          <li>ការដឹកជញ្ជូន</li>
+          <li>ការទូទាត់</li>
+        </ul>
+      </div>
+      <div>
+        <h3>ទំនាក់ទំនង</h3>
+        <ul>
+          <li>📞 012 345 678</li>
+          <li>📧 foodstore@example.com</li>
+          <li>📍 ភ្នំពេញ ប្រទេសកម្ពុជា</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 FoodStore • HTML + CSS + JavaScript</div>
+  </footer>
 
-        <div class="footer-content">
+  <!-- Cart modal -->
+  <div class="overlay" id="cartModal">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>🛒 កន្ត្រកទំនិញរបស់ខ្ញុំ</h3>
+        <button class="close" data-close="cartModal">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="cartContent"></div>
+      </div>
+    </div>
+  </div>
 
+  <!-- Customer modal -->
+  <div class="overlay" id="customerModal">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>👤 ព័ត៌មានអ្នកទទួល</h3>
+        <button class="close" data-close="customerModal">×</button>
+      </div>
+      <div class="modal-body">
+        <form id="customerForm" class="form-grid">
+          <div>
+            <label for="customerName">ឈ្មោះអ្នកទទួល *</label>
+            <input id="customerName" required placeholder="ឧ. សុភា">
+          </div>
+          <div>
+            <label for="customerPhone">លេខទូរស័ព្ទ *</label>
+            <input id="customerPhone" required inputmode="tel" placeholder="ឧ. 012 345 678">
+          </div>
+          <div>
+            <label for="customerLocation">ទីតាំងដឹកជញ្ជូន *</label>
+            <textarea id="customerLocation" required placeholder="សរសេរអាសយដ្ឋាន ឬទីតាំងឱ្យច្បាស់..."></textarea>
+          </div>
+          <div>
+            <label for="customerNote">កំណត់សម្គាល់ (មិនចាំបាច់)</label>
+            <textarea id="customerNote" placeholder="ឧ. មិនដាក់ហឹរ, ទូរស័ព្ទមុនមកដល់..."></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn" data-close="customerModal">បោះបង់</button>
+            <button class="btn btn-primary">រក្សាទុកព័ត៌មាន</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout modal -->
+  <div class="overlay" id="checkoutModal">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>✅ បញ្ជាក់ការបញ្ជាទិញ</h3>
+        <button class="close" data-close="checkoutModal">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="checkoutSummary"></div>
+        <div class="form-actions">
+          <button class="btn" data-close="checkoutModal">ត្រឡប់</button>
+          <button class="btn btn-primary" id="confirmOrderBtn">បញ្ជាទិញឥឡូវនេះ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    /* =========================
+       Product data
+    ========================== */
+    const products = [
+      {id:1,name:"បាយឆាសាច់គោ",category:"បាយ",price:3.00,old:3.50,rating:4.9,best:true,tag:"លក់ដាច់",img:"https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=700&q=80",desc:"បាយឆាក្តៅៗ ជាមួយសាច់គោ និងបន្លែស្រស់"},
+      {id:2,name:"អាម៉ុកខ្មែរ",category:"បាយ",price:4.00,old:4.50,rating:4.8,best:true,tag:"ពេញនិយម",img:"https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=700&q=80",desc:"រសជាតិខ្មែរ ឈ្ងុយឆ្ងាញ់ សម្រាប់អាហារពេលថ្ងៃ"},
+      {id:3,name:"ឡុកឡាក់សាច់គោ",category:"បាយ",price:4.50,old:5.00,rating:4.9,best:true,tag:"ពេញនិយម",img:"https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=700&q=80",desc:"សាច់គោទន់ៗ ជាមួយបន្លែ និងទឹកជ្រលក់"},
+      {id:4,name:"បាយមាន់បំពង",category:"បាយ",price:3.50,old:4.00,rating:4.7,best:false,tag:"ថ្មី",img:"https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=700&q=80",desc:"មាន់បំពងស្រួយ និងបាយក្តៅៗ"},
+      {id:5,name:"Pizza Cheese",category:"Fast Food",price:5.50,old:6.50,rating:4.9,best:true,tag:"-15%",img:"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=700&q=80",desc:"ឈីសច្រើនៗ ម្សៅទន់ ញ៉ាំក្តៅៗ"},
+      {id:6,name:"Double Beef Burger",category:"Fast Food",price:4.90,old:5.90,rating:4.8,best:true,tag:"លក់ដាច់",img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=80",desc:"សាច់គោពីរស្រទាប់ ជាមួយឈីស និងបន្លែ"},
+      {id:7,name:"Chicken Wings",category:"Fast Food",price:3.50,old:4.00,rating:4.7,best:false,tag:"ពេញនិយម",img:"https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=700&q=80",desc:"ស្លាបមាន់បំពងស្រួយ ជាមួយទឹកជ្រលក់"},
+      {id:8,name:"Spaghetti",category:"Fast Food",price:4.50,old:5.00,rating:4.6,best:false,tag:"",img:"https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?auto=format&fit=crop&w=700&q=80",desc:"ប៉ាស្តាជាមួយទឹកជ្រលក់ និងសាច់គោ"},
+      {id:9,name:"ដំឡូងបារាំង",category:"Snack",price:1.80,old:2.20,rating:4.6,best:true,tag:"",img:"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=700&q=80",desc:"ដំឡូងបំពងក្តៅៗ ស្រួយ និងឆ្ងាញ់"},
+      {id:10,name:"Chicken Sandwich",category:"Snack",price:3.20,old:3.80,rating:4.6,best:false,tag:"",img:"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=700&q=80",desc:"នំប៉័ងមាន់ ជាមួយបន្លែស្រស់"},
+      {id:11,name:"Mango Smoothie",category:"ភេសជ្ជៈ",price:2.50,old:3.00,rating:4.8,best:true,tag:"ថ្មី",img:"https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&w=700&q=80",desc:"ស្វាយស្រស់ក្រឡុក ផ្អែមត្រជាក់"},
+      {id:12,name:"Milk Tea",category:"ភេសជ្ជៈ",price:2.00,old:2.50,rating:4.9,best:true,tag:"លក់ដាច់",img:"https://images.unsplash.com/photo-1558857563-b371033873b8?auto=format&fit=crop&w=700&q=80",desc:"តែទឹកដោះគោ ឈ្ងុយ និងត្រជាក់"},
+      {id:13,name:"Fresh Orange Juice",category:"ភេសជ្ជៈ",price:2.00,old:2.50,rating:4.7,best:false,tag:"",img:"https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=700&q=80",desc:"ទឹកក្រូចស្រស់ មិនធ្ងន់ពោះ"},
+      {id:14,name:"Iced Coffee",category:"ភេសជ្ជៈ",price:1.80,old:2.20,rating:4.8,best:true,tag:"",img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=700&q=80",desc:"កាហ្វេទឹកកក ឈ្ងុយ និងមានរសជាតិខ្លាំង"},
+      {id:15,name:"Chocolate Cake",category:"បង្អែម",price:3.50,old:4.00,rating:4.9,best:true,tag:"ពេញនិយម",img:"https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=700&q=80",desc:"នំសូកូឡាទន់ៗ សម្រាប់អ្នកចូលចិត្តផ្អែម"},
+      {id:16,name:"Fresh Fruit Cake",category:"បង្អែម",price:3.80,old:4.50,rating:4.6,best:false,tag:"",img:"https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=700&q=80",desc:"នំផ្លែឈើស្រស់ រសជាតិទន់ស្រាល"},
+      {id:17,name:"Iced Tea",category:"ភេសជ្ជៈ",price:1.50,old:1.80,rating:4.5,best:false,tag:"",img:"https://images.unsplash.com/photo-1499638673689-79a0b5115d87?auto=format&fit=crop&w=700&q=80",desc:"តែត្រជាក់ ស្រស់ស្រាយ និងងាយផឹក"},
+      {id:18,name:"Soft Drink",category:"ភេសជ្ជៈ",price:1.25,old:1.50,rating:4.4,best:false,tag:"",img:"https://images.unsplash.com/photo-1629203849820-fdd70d49c38e?auto=format&fit=crop&w=700&q=80",desc:"ភេសជ្ជៈត្រជាក់សម្រាប់ញ៉ាំជាមួយម្ហូប"}
+    ];
+
+    let cart = JSON.parse(localStorage.getItem("foodStoreCart") || "[]");
+    let customer = JSON.parse(localStorage.getItem("foodStoreCustomer") || "null");
+    let currentFilter = "all";
+    let currentSearch = "";
+
+    const $ = (id) => document.getElementById(id);
+
+    function money(value){
+      return "$" + value.toFixed(2);
+    }
+
+    function saveCart(){
+      localStorage.setItem("foodStoreCart", JSON.stringify(cart));
+      updateCartCount();
+    }
+
+    function updateCartCount(){
+      $("cartCount").textContent = cart.reduce((sum,item)=>sum+item.qty,0);
+    }
+
+    function showToast(message){
+      const toast = $("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(()=>toast.classList.remove("show"),2200);
+    }
+
+    function renderProductCard(product){
+      return `
+        <article class="product">
+          <div class="product-img">
+            <img src="${product.img}" alt="${product.name}" loading="lazy">
+            ${product.tag ? `<span class="tag">${product.tag}</span>` : ""}
+            <button class="heart" data-like="${product.id}" aria-label="ចូលចិត្ត">♡</button>
+          </div>
+          <div class="product-body">
+            <div class="product-name" title="${product.name}">${product.name}</div>
+            <div class="product-desc">${product.desc}</div>
+            <div class="rating">★★★★★ <span>${product.rating}</span></div>
+            <div class="product-bottom">
+              <div>
+                <div class="price">${money(product.price)}</div>
+                ${product.old ? `<div class="old-price">${money(product.old)}</div>` : ""}
+              </div>
+              <button class="add" data-add="${product.id}" title="ដាក់ចូលកន្ត្រក">+</button>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderBest(){
+      $("bestProducts").innerHTML = products.filter(p=>p.best).slice(0,5).map(renderProductCard).join("");
+    }
+
+    function getFiltered(){
+      let list = [...products];
+
+      if(currentFilter !== "all"){
+        list = list.filter(p=>p.category === currentFilter);
+      }
+
+      if(currentSearch.trim()){
+        const q = currentSearch.toLowerCase();
+        list = list.filter(p =>
+          p.name.toLowerCase().includes(q) ||
+          p.category.toLowerCase().includes(q) ||
+          p.desc.toLowerCase().includes(q)
+        );
+      }
+
+      const sort = $("sortSelect").value;
+      if(sort === "low") list.sort((a,b)=>a.price-b.price);
+      if(sort === "high") list.sort((a,b)=>b.price-a.price);
+      if(sort === "rating") list.sort((a,b)=>b.rating-a.rating);
+
+      return list;
+    }
+
+    function renderShop(){
+      const list = getFiltered();
+      $("allProducts").innerHTML = list.length
+        ? list.map(renderProductCard).join("")
+        : `<div class="empty" style="grid-column:1/-1">មិនទាន់រកឃើញទំនិញដែលអ្នកស្វែងរកទេ។</div>`;
+
+      $("resultText").textContent = currentSearch
+        ? `រកឃើញ ${list.length} មុខ សម្រាប់ "${currentSearch}"`
+        : `បង្ហាញ ${list.length} មុខ`;
+    }
+
+    function addToCart(id){
+      const product = products.find(p=>p.id === id);
+      if(!product) return;
+
+      const found = cart.find(item=>item.id === id);
+      if(found) found.qty++;
+      else cart.push({id,qty:1});
+
+      saveCart();
+      showToast(`បានដាក់ "${product.name}" ចូលកន្ត្រក`);
+    }
+
+    function changeQty(id, delta){
+      const item = cart.find(x=>x.id === id);
+      if(!item) return;
+      item.qty += delta;
+      if(item.qty <= 0) cart = cart.filter(x=>x.id !== id);
+      saveCart();
+      renderCart();
+    }
+
+    function cartTotal(){
+      return cart.reduce((sum,item)=>{
+        const p = products.find(x=>x.id === item.id);
+        return sum + (p ? p.price * item.qty : 0);
+      },0);
+    }
+
+    function renderCart(){
+      if(!cart.length){
+        $("cartContent").innerHTML = `<div class="empty">🛒<br>កន្ត្រករបស់អ្នកនៅទទេ។<br>សូមជ្រើសរើសម្ហូបមុនសិន។</div>`;
+        return;
+      }
+
+      const items = cart.map(item=>{
+        const p = products.find(x=>x.id === item.id);
+        if(!p) return "";
+        return `
+          <div class="cart-item">
+            <img src="${p.img}" alt="${p.name}">
             <div>
-                <div class="footer-logo">🍔 FoodStore</div>
-
-                <p>
-                    ហាងអាហារ និងភេសជ្ជៈ
-                    ដែលផ្តល់ជូនអាហារឆ្ងាញ់ៗ
-                    ក្នុងតម្លៃសមរម្យ។
-                </p>
+              <b>${p.name}</b>
+              <small>${money(p.price)} × ${item.qty}</small>
+              <div class="qty">
+                <button data-qty="${p.id}" data-delta="-1">−</button>
+                <span>${item.qty}</span>
+                <button data-qty="${p.id}" data-delta="1">+</button>
+              </div>
             </div>
+            <strong>${money(p.price * item.qty)}</strong>
+          </div>
+        `;
+      }).join("");
 
-            <div class="footer-links">
-
-                <h3>Menu</h3>
-
-                <a href="#home">ទំព័រដើម</a>
-                <a href="#menu">មុខម្ហូប</a>
-                <a href="#coming">នឹងមកដល់</a>
-
-            </div>
-
-            <div class="footer-links">
-
-                <h3>Contact</h3>
-
-                <a href="#">📞 +885 ... ...</a>
-                <a href="#">📧 foodonlinestor@gmail.com</a>
-                <a href="#">📍 Kampong Speu</a>
-
-            </div>
-
+      $("cartContent").innerHTML = `
+        <div class="cart-list">${items}</div>
+        <div class="cart-total">
+          <span>សរុប</span><span>${money(cartTotal())}</span>
         </div>
+        <button class="btn btn-primary" id="checkoutBtn" style="width:100%;margin-top:13px">
+          បន្តទៅបញ្ជាទិញ
+        </button>
+      `;
+    }
 
-        <div class="copyright">
-            © 2026 FoodStore. All Rights Reserved.
+    function openModal(id){
+      $(id).classList.add("show");
+      if(id === "cartModal") renderCart();
+    }
+
+    function closeModal(id){
+      $(id).classList.remove("show");
+    }
+
+    function loadCustomerForm(){
+      if(!customer) return;
+      $("customerName").value = customer.name || "";
+      $("customerPhone").value = customer.phone || "";
+      $("customerLocation").value = customer.location || "";
+      $("customerNote").value = customer.note || "";
+    }
+
+    function renderOrderStatus(){
+      const order = JSON.parse(localStorage.getItem("foodStoreLastOrder") || "null");
+      if(!order){
+        $("orderStatus").innerHTML = `<p>អ្នកមិនទាន់មានការបញ្ជាទិញចុងក្រោយទេ។</p>`;
+        return;
+      }
+
+      $("orderStatus").innerHTML = `
+        <div style="background:#f7f7f7;border-radius:8px;padding:12px;margin-top:8px">
+          <p><b>លេខបញ្ជាទិញ:</b> ${order.id}</p>
+          <p><b>អ្នកទទួល:</b> ${order.customer.name}</p>
+          <p><b>សរុប:</b> ${money(order.total)}</p>
+          <p><b>ស្ថានភាព:</b> <span style="color:#159447;font-weight:bold">${order.status}</span></p>
+          <p><b>ពេលដឹកប្រហែល:</b> 25–45 នាទី</p>
         </div>
+      `;
+    }
 
-    </footer>
+    function buildCheckout(){
+      if(!cart.length){
+        showToast("កន្ត្រកនៅទទេ");
+        return;
+      }
 
-    <div class="cart-overlay" id="cartOverlay">
+      if(!customer){
+        closeModal("cartModal");
+        loadCustomerForm();
+        openModal("customerModal");
+        showToast("សូមបញ្ចូលព័ត៌មានអ្នកទទួលជាមុន");
+        return;
+      }
 
-        <div class="cart-panel">
+      const rows = cart.map(item=>{
+        const p = products.find(x=>x.id === item.id);
+        return `<div style="display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding:6px 0;font-size:12px">
+          <span>${p.name} × ${item.qty}</span><b>${money(p.price*item.qty)}</b>
+        </div>`;
+      }).join("");
 
-            <div class="cart-header">
-
-                <h2>🛒 កន្ត្រកទំនិញ</h2>
-
-                <button class="close-cart" onclick="closeCart()">
-                    ×
-                </button>
-
-            </div>
-
-
-            <div class="cart-items" id="cartItems">
-
-                <div class="empty-cart">
-                    🛒<br>
-                    កន្ត្រករបស់អ្នកទទេ
-                </div>
-
-            </div>
-
-
-            <div class="cart-footer">
-
-                <div class="cart-total">
-                    <span>សរុប</span>
-                    <span id="cartTotal">$0.00</span>
-                </div>
-
-                <button class="checkout-btn" onclick="openPayment()">
-                    💳 បង់ប្រាក់
-                </button>
-
-            </div>
-
+      $("checkoutSummary").innerHTML = `
+        <div style="background:#fafafa;border-radius:8px;padding:10px;margin-bottom:12px">
+          <b>អ្នកទទួល:</b> ${customer.name}<br>
+          <b>ទូរស័ព្ទ:</b> ${customer.phone}<br>
+          <b>ទីតាំង:</b> ${customer.location}
         </div>
-
-    </div>
-
-    <div class="payment-overlay" id="paymentOverlay">
-
-        <div class="payment-modal">
-
-            <div class="payment-header">
-
-                <h2>💳 បង់ប្រាក់</h2>
-
-                <button class="close-payment" onclick="closePayment()">
-                    ×
-                </button>
-
-            </div>
-
-
-            <p class="payment-subtitle">
-                សូមស្កេន QR Code ដើម្បីបង់ប្រាក់
-            </p>
-
-
-            <div class="payment-total">
-
-                <span>ចំនួនទឹកប្រាក់ត្រូវបង់</span>
-
-                <strong id="paymentTotal">
-                    $0.00
-                </strong>
-
-            </div>
-
-
-            <div class="payment-method">
-
-                <label for="paymentMethod">
-                    ជ្រើសរើសវិធីបង់ប្រាក់
-                </label>
-
-                <select id="paymentMethod">
-                    <option value="qr">📱 QR Payment</option>
-                    <option value="cash">💵 Cash on Delivery</option>
-                </select>
-
-            </div>
-
-
-            <div class="qr-box">
-
-                <img id="qrImage"
-                    src="https://link.payway.com.kh/images/khqr-currency-icon.svg"
-                    alt="Demo QR Code">
-
-            </div>
-
-
-            <div class="payment-note">
-                ⚠️ QR នេះជា <strong>Demo QR</strong> សម្រាប់ Website Project។
-                ប្រសិនបើអ្នកមាន QR ABA / Wing ពិត
-                អ្នកអាចយកមកជំនួសរូបនេះបាន។
-            </div>
-
-
-            <div class="payment-actions">
-
-                <button class="cancel-payment" onclick="closePayment()">
-                    បោះបង់
-                </button>
-
-                <button class="confirm-payment" onclick="confirmPayment()">
-                    ✅ ខ្ញុំបានបង់ប្រាក់
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="notification" id="notification">
-        បានបន្ថែមទៅក្នុងកន្ត្រក ✅
-    </div>
-
-    <script>
-
-        let cart = JSON.parse(localStorage.getItem("foodStoreCart")) || [];
-        let currentSlide = 0;
-
-        const slides = document.querySelectorAll(".slide");
-        const dots = document.querySelectorAll(".dot");
-
-
-        function showSlide(index) {
-
-            slides.forEach((slide) => {
-                slide.classList.remove("active");
-            });
-
-            dots.forEach((dot) => {
-                dot.classList.remove("active");
-            });
-
-            slides[index].classList.add("active");
-            dots[index].classList.add("active");
-
-            currentSlide = index;
-        }
-
-
-        setInterval(() => {
-
-            currentSlide++;
-
-            if (currentSlide >= slides.length) {
-                currentSlide = 0;
-            }
-
-            showSlide(currentSlide);
-
-        }, 5000);
-
-        function addToCart(name, price, image) {
-
-            const existingItem = cart.find(
-                item => item.name === name
-            );
-
-
-            if (existingItem) {
-
-                existingItem.quantity++;
-
-            } else {
-
-                cart.push({
-                    name: name,
-                    price: price,
-                    image: image,
-                    quantity: 1
-                });
-
-            }
-
-
-            saveCart();
-
-            showNotification(
-                `${name} បានបន្ថែមទៅក្នុងកន្ត្រក ✅`
-            );
-        }
-
-        function saveCart() {
-
-            localStorage.setItem(
-                "foodStoreCart",
-                JSON.stringify(cart)
-            );
-
-            updateCart();
-        }
-        function updateCart() {
-
-            const cartItems = document.getElementById("cartItems");
-            const cartCount = document.getElementById("cartCount");
-            const cartTotal = document.getElementById("cartTotal");
-
-
-            let totalItems = 0;
-            let totalPrice = 0;
-
-
-            cart.forEach(item => {
-
-                totalItems += item.quantity;
-
-                totalPrice +=
-                    item.price * item.quantity;
-
-            });
-
-
-            cartCount.textContent = totalItems;
-
-            cartTotal.textContent =
-                `$${totalPrice.toFixed(2)}`;
-
-
-            if (cart.length === 0) {
-
-                cartItems.innerHTML = `
-                    <div class="empty-cart">
-                        🛒<br>
-                        កន្ត្រករបស់អ្នកទទេ
-                    </div>
-                `;
-
-                return;
-            }
-
-
-            cartItems.innerHTML = cart.map(
-                (item, index) => {
-
-                    return `
-                        <div class="cart-item">
-
-                            <img
-                                src="${item.image}"
-                                alt="${item.name}"
-                            >
-
-                            <div class="cart-item-info">
-
-                                <h4>
-                                    ${item.name}
-                                </h4>
-
-                                <div>
-                                    ចំនួន:
-                                    ${item.quantity}
-                                </div>
-
-                                <div class="cart-item-price">
-                                    $${(
-                            item.price *
-                            item.quantity
-                        ).toFixed(2)}
-                                </div>
-
-                                <button
-                                    class="remove-item"
-                                    onclick="removeFromCart(${index})">
-                                    លុប
-                                </button>
-
-                            </div>
-
-                        </div>
-                    `;
-
-                }
-            ).join("");
-        }
-        function removeFromCart(index) {
-
-            cart.splice(index, 1);
-
-            saveCart();
-
-            showNotification(
-                "បានលុបចេញពីកន្ត្រក 🗑️"
-            );
-        }
-
-        function openCart() {
-
-            document
-                .getElementById("cartOverlay")
-                .classList.add("active");
-
-            updateCart();
-        }
-
-        function closeCart() {
-
-            document
-                .getElementById("cartOverlay")
-                .classList.remove("active");
-        }
-
-        function openPayment() {
-
-            if (cart.length === 0) {
-
-                showNotification(
-                    "សូមបន្ថែមមុខម្ហូបជាមុនសិន 🛒"
-                );
-
-                return;
-            }
-
-
-            let total = 0;
-
-            cart.forEach(item => {
-
-                total +=
-                    item.price * item.quantity;
-
-            });
-
-
-            document.getElementById(
-                "paymentTotal"
-            ).textContent =
-                `$${total.toFixed(2)}`;
-
-
-            document
-                .getElementById("paymentOverlay")
-                .classList.add("active");
-        }
-
-        function closePayment() {
-
-            document
-                .getElementById("paymentOverlay")
-                .classList.remove("active");
-        }
-
-        function confirmPayment() {
-
-            if (cart.length === 0) {
-                return;
-            }
-
-
-            cart = [];
-
-            saveCart();
-
-            closePayment();
-            closeCart();
-
-
-            showNotification(
-                "ការបង់ប្រាក់បានជោគជ័យ! សូមអរគុណ ❤️"
-            );
-        }
-
-        function searchProducts() {
-
-            const searchValue =
-                document
-                    .getElementById("searchInput")
-                    .value
-                    .toLowerCase();
-
-
-            const products =
-                document.querySelectorAll(
-                    ".product-card"
-                );
-
-
-            products.forEach(product => {
-
-                const name =
-                    product
-                        .dataset
-                        .name
-                        .toLowerCase();
-
-
-                if (name.includes(searchValue)) {
-
-                    product.style.display = "";
-
-                } else {
-
-                    product.style.display = "none";
-
-                }
-
-            });
-        }
-
-        function showNotification(message) {
-
-            const notification =
-                document.getElementById(
-                    "notification"
-                );
-
-
-            notification.textContent = message;
-
-            notification.classList.add("show");
-
-
-            setTimeout(() => {
-
-                notification.classList.remove(
-                    "show"
-                );
-
-            }, 2500);
-        }
-
-        document
-            .getElementById("paymentOverlay")
-            .addEventListener("click", function (event) {
-
-                if (event.target === this) {
-                    closePayment();
-                }
-
-            });
-
-
-        document
-            .getElementById("cartOverlay")
-            .addEventListener("click", function (event) {
-
-                if (event.target === this) {
-                    closeCart();
-                }
-
-            });
-
-        updateCart();
-
-    </script>
-
+        ${rows}
+        <div class="cart-total"><span>សរុបត្រូវបង់</span><span>${money(cartTotal())}</span></div>
+        <p style="font-size:11px;color:#888;margin-top:9px">
+          * នេះជាគេហទំព័រ Demo។ ការបញ្ជាទិញត្រូវបានរក្សាទុកក្នុង Browser មិនទាន់ភ្ជាប់ទៅ Server ឬការទូទាត់ពិតទេ។
+        </p>
+      `;
+      closeModal("cartModal");
+      openModal("checkoutModal");
+    }
+
+    function confirmOrder(){
+      if(!customer || !cart.length) return;
+
+      const order = {
+        id:"FS-" + Date.now().toString().slice(-8),
+        customer,
+        items:cart,
+        total:cartTotal(),
+        status:"កំពុងរៀបចំ",
+        createdAt:new Date().toISOString()
+      };
+
+      localStorage.setItem("foodStoreLastOrder", JSON.stringify(order));
+      cart = [];
+      saveCart();
+      closeModal("checkoutModal");
+      renderOrderStatus();
+      showToast(`បញ្ជាទិញជោគជ័យ • ${order.id}`);
+      document.querySelector("#delivery").scrollIntoView({behavior:"smooth"});
+    }
+
+    /* =========================
+       Events
+    ========================== */
+    document.addEventListener("click",(e)=>{
+      const add = e.target.closest("[data-add]");
+      if(add) addToCart(Number(add.dataset.add));
+
+      const qty = e.target.closest("[data-qty]");
+      if(qty) changeQty(Number(qty.dataset.qty), Number(qty.dataset.delta));
+
+      const like = e.target.closest("[data-like]");
+      if(like){
+        like.classList.toggle("liked");
+        like.textContent = like.classList.contains("liked") ? "♥" : "♡";
+      }
+
+      const close = e.target.closest("[data-close]");
+      if(close) closeModal(close.dataset.close);
+
+      if(e.target.id === "checkoutBtn") buildCheckout();
+    });
+
+    document.querySelectorAll(".overlay").forEach(overlay=>{
+      overlay.addEventListener("click",(e)=>{
+        if(e.target === overlay) overlay.classList.remove("show");
+      });
+    });
+
+    $("cartBtn").addEventListener("click",()=>openModal("cartModal"));
+
+    $("customerBtn").addEventListener("click",()=>{
+      loadCustomerForm();
+      openModal("customerModal");
+    });
+
+    $("deliveryCustomerBtn").addEventListener("click",()=>{
+      loadCustomerForm();
+      openModal("customerModal");
+    });
+
+    $("customerForm").addEventListener("submit",(e)=>{
+      e.preventDefault();
+
+      const name = $("customerName").value.trim();
+      const phone = $("customerPhone").value.trim();
+      const location = $("customerLocation").value.trim();
+      const note = $("customerNote").value.trim();
+
+      if(name.length < 2){
+        showToast("សូមបញ្ចូលឈ្មោះឱ្យបានត្រឹមត្រូវ");
+        return;
+      }
+      if(!/^[0-9+\s-]{8,15}$/.test(phone)){
+        showToast("សូមពិនិត្យលេខទូរស័ព្ទម្តងទៀត");
+        return;
+      }
+      if(location.length < 5){
+        showToast("សូមបញ្ចូលទីតាំងដឹកជញ្ជូន");
+        return;
+      }
+
+      customer = {name,phone,location,note};
+      localStorage.setItem("foodStoreCustomer",JSON.stringify(customer));
+      closeModal("customerModal");
+      showToast("បានរក្សាទុកព័ត៌មានអ្នកទទួល");
+    });
+
+    $("confirmOrderBtn").addEventListener("click",confirmOrder);
+
+    $("searchForm").addEventListener("submit",(e)=>{
+      e.preventDefault();
+      currentSearch = $("searchInput").value.trim();
+      renderShop();
+      document.querySelector("#shop").scrollIntoView({behavior:"smooth"});
+    });
+
+    $("searchInput").addEventListener("input",(e)=>{
+      currentSearch = e.target.value.trim();
+      renderShop();
+    });
+
+    document.querySelectorAll("[data-filter]").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        currentFilter = btn.dataset.filter;
+        document.querySelectorAll("[data-filter]").forEach(x=>x.classList.remove("active"));
+        btn.classList.add("active");
+        renderShop();
+      });
+    });
+
+    document.querySelectorAll("[data-category-link]").forEach(link=>{
+      link.addEventListener("click",()=>{
+        currentFilter = link.dataset.categoryLink === "ប្រូម៉ូសិន" ? "all" : link.dataset.categoryLink;
+        document.querySelectorAll("[data-filter]").forEach(x=>{
+          x.classList.toggle("active",x.dataset.filter===currentFilter);
+        });
+        setTimeout(renderShop,50);
+      });
+    });
+
+    $("sortSelect").addEventListener("change",renderShop);
+
+    $("themeBtn").addEventListener("click",()=>{
+      document.body.classList.toggle("dark");
+      localStorage.setItem("foodStoreDark",document.body.classList.contains("dark") ? "1" : "0");
+    });
+
+    /* =========================
+       Init
+    ========================== */
+    if(localStorage.getItem("foodStoreDark")==="1"){
+      document.body.classList.add("dark");
+    }
+    renderBest();
+    renderShop();
+    renderOrderStatus();
+    updateCartCount();
+  </script>
 </body>
-
 </html>
