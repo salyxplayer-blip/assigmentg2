@@ -5,12 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="FoodStore - ហាងលក់អាហារ និងភេសជ្ជៈ Online">
-    <title>FoodStore | ហាងអាហារ Online</title>
+    <title>Food ​Oline</title>
 
     <style>
-        /* =========================
-       Base
-    ========================== */
         :root {
             --primary: #e53935;
             --primary-dark: #c62828;
@@ -70,9 +67,6 @@
             margin: auto
         }
 
-        /* =========================
-       Top notice
-    ========================== */
         .topbar {
             background: #fff;
             border-bottom: 1px solid var(--line);
@@ -94,9 +88,6 @@
             gap: 7px
         }
 
-        /* =========================
-       Header
-    ========================== */
         .header {
             background: #fff;
             position: sticky;
@@ -234,9 +225,6 @@
             border-bottom-color: var(--primary)
         }
 
-        /* =========================
-       Hero / categories
-    ========================== */
         .hero {
             padding: 18px 0 8px;
         }
@@ -347,9 +335,6 @@
             font-size: 10px
         }
 
-        /* =========================
-       Common section
-    ========================== */
         .section {
             padding: 14px 0 24px
         }
@@ -378,9 +363,6 @@
             white-space: nowrap
         }
 
-        /* =========================
-       Product cards
-    ========================== */
         .products {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -515,9 +497,6 @@
             color: #fff
         }
 
-        /* =========================
-       Shop layout / filters
-    ========================== */
         .shop-layout {
             display: grid;
             grid-template-columns: 200px 1fr;
@@ -584,9 +563,6 @@
             font-size: 12px;
         }
 
-        /* =========================
-       Promo / service strip
-    ========================== */
         .promo-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -622,9 +598,6 @@
             color: #888
         }
 
-        /* =========================
-       Delivery / order
-    ========================== */
         .order-area {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -673,9 +646,6 @@
             font-size: 12px;
         }
 
-        /* =========================
-       Footer
-    ========================== */
         footer {
             background: #202020;
             color: #ccc;
@@ -717,9 +687,6 @@
             text-align: center;
         }
 
-        /* =========================
-       Modals
-    ========================== */
         .overlay {
             position: fixed;
             inset: 0;
@@ -873,7 +840,6 @@
             font-size: 13px
         }
 
-        /* Toast */
         .toast {
             position: fixed;
             right: 18px;
@@ -896,9 +862,6 @@
             opacity: 1
         }
 
-        /* =========================
-       Responsive
-    ========================== */
         @media(max-width:1000px) {
             .products {
                 grid-template-columns: repeat(4, 1fr)
@@ -1047,9 +1010,6 @@
             }
         }
 
-        /* =========================
-       Dark mode
-    ========================== */
         body.dark {
             --text: #f2f2f2;
             --muted: #aaa;
@@ -1139,13 +1099,13 @@
             <a href="#home" class="brand">
                 <div class="brand-mark">🍴</div>
                 <div>
-                    <strong>FoodStore</strong>
+                    <strong>Food Online Store</strong>
                     <small>អាហារឆ្ងាញ់ • តម្លៃសមរម្យ</small>
                 </div>
             </a>
 
             <form class="search" id="searchForm">
-                <input id="searchInput" type="search" placeholder="ស្វែងរកម្ហូប ភេសជ្ជៈ ឬទំនិញ..." autocomplete="off">
+                <input id="searchInput" type="search" placeholder="ស្វែងរកម្ហូប" autocomplete="off">
                 <button aria-label="ស្វែងរក">⌕</button>
             </form>
 
@@ -1225,7 +1185,7 @@
         <section class="section container" id="shop">
             <div class="section-head">
                 <div class="section-title">
-                    <h2>🛍️ ហាងអាហារ Online</h2>
+                    <h2>🍛 ហាងអាហារ Online</h2>
                     <p>ជ្រើសរើសទំនិញ → ដាក់កន្ត្រក → បញ្ជាទិញ</p>
                 </div>
             </div>
@@ -1349,15 +1309,14 @@
                 <h3>ទំនាក់ទំនង</h3>
                 <ul>
                     <li>📞 012 345 678</li>
-                    <li>📧 foodstore@example.com</li>
-                    <li>📍 ភ្នំពេញ ប្រទេសកម្ពុជា</li>
+                    <li>📧 foodonlinestore@example.com</li>
+                    <li>📍 ខេត្តកំពង់ស្ពឺ​​ ប្រទេសកម្ពុជា</li>
                 </ul>
             </div>
         </div>
-        <div class="footer-bottom">© 2026 FoodStore • HTML + CSS + JavaScript</div>
+        <div class="footer-bottom">© 2026 Food Online Store • HTML + CSS + JavaScript</div>
     </footer>
 
-    <!-- Cart modal -->
     <div class="overlay" id="cartModal">
         <div class="modal">
             <div class="modal-head">
@@ -1370,7 +1329,6 @@
         </div>
     </div>
 
-    <!-- Customer modal -->
     <div class="overlay" id="customerModal">
         <div class="modal">
             <div class="modal-head">
@@ -1381,20 +1339,15 @@
                 <form id="customerForm" class="form-grid">
                     <div>
                         <label for="customerName">ឈ្មោះអ្នកទទួល *</label>
-                        <input id="customerName" required placeholder="ឧ. សុភា">
+                        <input id="customerName" required placeholder="ឈ្មោះរបស់អ្នក">
                     </div>
                     <div>
                         <label for="customerPhone">លេខទូរស័ព្ទ *</label>
-                        <input id="customerPhone" required inputmode="tel" placeholder="ឧ. 012 345 678">
+                        <input id="customerPhone" required inputmode="tel" placeholder="បំពេញលេខទូរស័ព្ទ">
                     </div>
                     <div>
                         <label for="customerLocation">ទីតាំងដឹកជញ្ជូន *</label>
-                        <textarea id="customerLocation" required
-                            placeholder="សរសេរអាសយដ្ឋាន ឬទីតាំងឱ្យច្បាស់..."></textarea>
-                    </div>
-                    <div>
-                        <label for="customerNote">កំណត់សម្គាល់ (មិនចាំបាច់)</label>
-                        <textarea id="customerNote" placeholder="ឧ. មិនដាក់ហឹរ, ទូរស័ព្ទមុនមកដល់..."></textarea>
+                        <textarea id="customerLocation" required placeholder="អាសយដ្ឋាន ឬទីតាំង..."></textarea>
                     </div>
                     <div class="form-actions">
                         <button type="button" class="btn" data-close="customerModal">បោះបង់</button>
@@ -1405,7 +1358,6 @@
         </div>
     </div>
 
-    <!-- Checkout modal -->
     <div class="overlay" id="checkoutModal">
         <div class="modal">
             <div class="modal-head">
@@ -1425,9 +1377,7 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        /* =========================
-           Product data
-        ========================== */
+
         const products = [
             { id: 1, name: "បាយឆាសាច់គោ", category: "បាយ", price: 3.00, old: 3.50, rating: 4.9, best: true, tag: "លក់ដាច់", img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=700&q=80", desc: "បាយឆាក្តៅៗ ជាមួយសាច់គោ និងបន្លែស្រស់" },
             { id: 2, name: "អាម៉ុកខ្មែរ", category: "បាយ", price: 4.00, old: 4.50, rating: 4.8, best: true, tag: "ពេញនិយម", img: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=700&q=80", desc: "រសជាតិខ្មែរ ឈ្ងុយឆ្ងាញ់ សម្រាប់អាហារពេលថ្ងៃ" },
@@ -1697,10 +1647,6 @@
             showToast(`បញ្ជាទិញជោគជ័យ • ${order.id}`);
             document.querySelector("#delivery").scrollIntoView({ behavior: "smooth" });
         }
-
-        /* =========================
-           Events
-        ========================== */
         document.addEventListener("click", (e) => {
             const add = e.target.closest("[data-add]");
             if (add) addToCart(Number(add.dataset.add));
@@ -1805,9 +1751,6 @@
             localStorage.setItem("foodStoreDark", document.body.classList.contains("dark") ? "1" : "0");
         });
 
-        /* =========================
-           Init
-        ========================== */
         if (localStorage.getItem("foodStoreDark") === "1") {
             document.body.classList.add("dark");
         }
